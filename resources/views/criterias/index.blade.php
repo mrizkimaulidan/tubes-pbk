@@ -5,6 +5,7 @@
 @section('content')
 <div class="container">
   <div class="row">
+    @include('partials.alert')
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Daftar Kriteria</h5>
