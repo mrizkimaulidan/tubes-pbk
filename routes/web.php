@@ -11,6 +11,6 @@ Route::get('/', function () {
 
 Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-Route::get('/kopi', [CoffeeController::class, 'index'])->name('coffees.index');
+Route::resource('/kopi', CoffeeController::class)->parameter('kopi', 'coffee');
 
 Route::resource('/kriteria', CriteriaController::class)->parameter('kriteria', 'criteria');
