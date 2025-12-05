@@ -21,7 +21,7 @@ class CoffeeController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -29,7 +29,9 @@ class CoffeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Coffee::create($request->all());
+
+        return redirect()->route('kopi.index')->with('success', 'Data kriteria berhasil ditambahkan!');
     }
 
     /**
