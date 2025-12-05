@@ -8,6 +8,13 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Daftar Kriteria</h5>
+
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+
         <div class="col-12">
           <table class="table">
             <thead>
@@ -39,7 +46,6 @@
                     {{ $criteria->description ?? '-' }}
                   </span>
                 </td>
-                <td>{{ $criteria->description }}</td>
                 <td>
                   <div class="btn-group gap-1" role="group">
                     <a href="{{ route('kriteria.edit', $criteria) }}" class="btn btn-warning btn-sm">
@@ -65,3 +71,7 @@
   </div>
 </div>
 @endsection
+
+@push('modal')
+@include('criterias.create')
+@endpush

@@ -30,7 +30,9 @@ class CriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Criteria::create($request->all());
+
+        return redirect()->route('kriteria.index')->with('sucess', 'Data kriteria berhasil ditambahkan!');
     }
 
     /**
