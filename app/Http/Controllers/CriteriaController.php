@@ -32,7 +32,7 @@ class CriteriaController extends Controller
     {
         Criteria::create($request->all());
 
-        return redirect()->route('kriteria.index')->with('sucess', 'Data kriteria berhasil ditambahkan!');
+        return redirect()->route('kriteria.index')->with('success', 'Data kriteria berhasil ditambahkan!');
     }
 
     /**
