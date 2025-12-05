@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('code', 10);
             $table->string('name');
             $table->decimal('weight');
-            $table->integer('attribute');
-            $table->text('description');
+            $table->string('attribute');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
