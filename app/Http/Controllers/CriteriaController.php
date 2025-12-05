@@ -46,17 +46,19 @@ class CriteriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Criteria $criteria)
     {
-        //
+        return view('criterias.edit', compact('criteria'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Criteria $criteria)
     {
-        //
+        $criteria->update($request->all());
+
+        return redirect()->route('kriteria.index')->with('success', 'Data kriteria berhasil diubah!');
     }
 
     /**
