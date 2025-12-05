@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coffee;
 use Illuminate\Http\Request;
 
 class CoffeeController extends Controller
@@ -11,7 +12,8 @@ class CoffeeController extends Controller
      */
     public function index()
     {
-        return view('coffees.index');
+        $coffe = Coffee::all();
+        return view('coffees.index', compact('coffe'));
     }
 
     /**
