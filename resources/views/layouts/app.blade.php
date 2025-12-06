@@ -20,7 +20,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Home</a>
           <a class="nav-link" href="{{ route('kopi.index') }}">Daftar Kopi</a>
           <a class="nav-link" href="{{ route('kriteria.index') }}">Daftar Kriteria</a>
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
