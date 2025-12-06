@@ -44,24 +44,36 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $credentials = $request->all();
+
+        if ($request->filled('password')) {
+            $credentials['password'] = bcrypt($credentials['password']);
+        } else {
+            $credentials = collect($credentials)->except('password', 'passsword_confirmation')->toArray();
+        }
+
+        $user->update($credentials);
+
+        return redirect()->route('pengguna.index')->with('success', 'Data pengguna berhasil diubah!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()->route('pengguna.index')->with('success', 'Data pengguna berhasil dihapus!');
     }
 }
