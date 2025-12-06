@@ -64,5 +64,5 @@
 @endsection
 
 @push('modal')
-@include('criterias.create')
+@include('users.create')
 @endpush

@@ -30,7 +30,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->all());
+
+        return redirect()->route('pengguna.index')->with('success', 'Data pengguna berhasil ditambahkan!');
     }
 
     /**
