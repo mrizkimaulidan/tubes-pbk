@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary pb-5">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5">
     <div class="container">
       <a class="navbar-brand" href="#">{{ config('app.name') }}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -19,12 +19,22 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Home</a>
+        <div class="navbar-nav w-100">
+          <a class="nav-link active" href="{{ route('dashboard') }}">Home</a>
           <a class="nav-link" href="{{ route('kopi.index') }}">Daftar Kopi</a>
           <a class="nav-link" href="{{ route('kriteria.index') }}">Daftar Kriteria</a>
           <a class="nav-link" href="{{ route('pengguna.index') }}">Daftar Pengguna</a>
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+
+          <!-- This will push to right -->
+          <div class="nav-link ms-auto">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="modeSwitchToggle">
+              <label class="form-check-label" for="modeSwitchToggle">
+                <!-- Initial icon -->
+                <i class="bi bi-moon-stars-fill" id="modeSwitchToggleIcon"></i>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -39,6 +49,33 @@
     document.addEventListener('DOMContentLoaded', () => {
       const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
       const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+      const modeSwitch = document.getElementById('modeSwitchToggle');
+      const modeSwitchIcon = document.getElementById('modeSwitchToggleIcon');
+      const htmlElement = document.documentElement;
+
+      const currentTheme = localStorage.getItem('theme');
+
+      if (currentTheme === 'dark') {
+        htmlElement.setAttribute('data-bs-theme', 'dark');
+        modeSwitch.checked = true;
+        // Set icon for dark mode
+        modeSwitchIcon.className = 'bi bi-sun';
+      } else {
+        htmlElement.setAttribute('data-bs-theme', 'light');
+      }
+
+      modeSwitch.addEventListener('change', function () {
+        if (this.checked) {
+          htmlElement.setAttribute('data-bs-theme', 'dark');
+          modeSwitchIcon.className = 'bi bi-sun'; // Replace entire class
+          localStorage.setItem('theme', 'dark');
+        } else {
+          htmlElement.setAttribute('data-bs-theme', 'light');
+          modeSwitchIcon.className = 'bi bi-moon-stars-fill'; // Replace entire class
+          localStorage.setItem('theme', 'light');
+        }
+      });
     });
   </script>
 
