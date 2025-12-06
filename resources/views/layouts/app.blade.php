@@ -23,6 +23,7 @@
           <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Home</a>
           <a class="nav-link" href="{{ route('kopi.index') }}">Daftar Kopi</a>
           <a class="nav-link" href="{{ route('kriteria.index') }}">Daftar Kriteria</a>
+          <a class="nav-link" href="{{ route('pengguna.index') }}">Daftar Pengguna</a>
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </div>
       </div>
