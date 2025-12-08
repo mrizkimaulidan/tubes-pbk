@@ -39,7 +39,8 @@
                   <span class="fw-bold">{{ $criteria->weight }}</span>
                 </td>
                 <td>
-                  <span class="badge text-bg-{{ $criteria->attribute == 'benefit' ? 'primary' : 'secondary' }}">{{
+                  <span
+                    class="badge bg-{{ $criteria->attribute == 'benefit' ? 'primary' : 'secondary' }}-subtle text-primary-emphasis">{{
                     $criteria->attribute }}</span>
                 </td>
                 <td>
