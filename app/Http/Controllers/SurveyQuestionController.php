@@ -48,17 +48,19 @@ class SurveyQuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SurveyQuestion $surveyQuestion)
+    public function edit(SurveyQuestion $question)
     {
-        //
+        return view('survey_questions.edit', compact('question'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SurveyQuestion $surveyQuestion)
+    public function update(Request $request, SurveyQuestion $question)
     {
-        //
+        $question->update($request->all());
+
+        return redirect()->route('pertanyaan.index')->with('success', 'Data pertanyaan berhasil diubah!');
     }
 
     /**
