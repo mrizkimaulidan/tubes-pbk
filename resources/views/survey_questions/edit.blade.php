@@ -56,6 +56,26 @@
         </div>
       </div>
     </div>
+
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Daftar Opsi Jawaban</h5>
+
+          <ol class="list-group list-group-numbered">
+            @foreach ($question->surveyQuestionOptions as $option)
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">{{ $option->label }}</div>
+                {{ $option->description }}
+              </div>
+              <span class="badge bg-success-subtle text-success-emphasis">Nilai: {{ $option->value }}</span>
+            </li>
+            @endforeach
+          </ol>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 @endsection

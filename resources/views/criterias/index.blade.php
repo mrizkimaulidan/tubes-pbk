@@ -11,9 +11,9 @@
         <h5 class="card-title">Daftar Kriteria</h5>
 
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
+          {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
             <i class="bi bi-plus"></i>
-          </button>
+          </button> --}}
         </div>
 
         <div class="col-12">

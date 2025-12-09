@@ -11,9 +11,9 @@
         <h5 class="card-title">Daftar Survey Pertanyaan</h5>
 
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
+          {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
             <i class="bi bi-plus"></i>
-          </button>
+          </button> --}}
         </div>
 
         <div class="col-12">
@@ -23,6 +23,7 @@
                 <th scope="col">No</th>
                 <th scope="col">Kriteria</th>
                 <th scope="col">Pertanyaan</th>
+                <th scope="col">Total Opsi Jawaban</th>
                 <th scope="col">Aksi</th>
               </tr>
             </thead>
@@ -61,6 +62,14 @@
                   <div class="small text-muted mt-1">
                     <span class="badge bg-info-subtle text-info-emphasis">
                       Urutan: {{ $question->sort_order }}
+                    </span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="text-muted mt-1">
+                    <span class="badge bg-success-subtle text-success-emphasis">
+                      {{ $question->survey_question_options_count }}
                     </span>
                   </div>
                 </td>

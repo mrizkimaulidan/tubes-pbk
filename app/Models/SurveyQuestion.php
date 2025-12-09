@@ -12,4 +12,9 @@ class SurveyQuestion extends Model
     {
         return $this->belongsTo(Criteria::class);
     }
+
+    public function surveyQuestionOptions()
+    {
+        return $this->hasMany(SurveyQuestionOption::class);
+    }
 }

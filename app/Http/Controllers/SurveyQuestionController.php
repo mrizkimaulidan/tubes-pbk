@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Criteria;
 use App\Models\SurveyQuestion;
+use App\Models\SurveyQuestionOption;
 use Illuminate\Http\Request;
 
 class SurveyQuestionController extends Controller
@@ -14,6 +15,7 @@ class SurveyQuestionController extends Controller
     public function index()
     {
         $surveyQuestions = SurveyQuestion::paginate(10);
+        $surveyQuestions->loadCount('surveyQuestionOptions');
         $criterias = Criteria::all();
 
         return view('survey_questions.index', compact('surveyQuestions', 'criterias'));
@@ -50,6 +52,8 @@ class SurveyQuestionController extends Controller
      */
     public function edit(SurveyQuestion $question)
     {
+        $question->load('surveyQuestionOptions');
+
         return view('survey_questions.edit', compact('question'));
     }
 
