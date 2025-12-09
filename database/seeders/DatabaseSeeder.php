@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CoffeSeeder::class,
-            CriteriasSeeder::class
+            CriteriasSeeder::class,
+            SurveyQuestionsSeeder::class,
+            QuestionOptionSeeder::class
         ]);
     }
 }
