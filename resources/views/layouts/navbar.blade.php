@@ -19,6 +19,9 @@
         <a class="nav-link" href="{{ route('pengguna.index') }}">
           <i class="bi bi-person-badge me-1"></i> Daftar Pengguna
         </a>
+        <a class="nav-link" href="{{ route('pertanyaan.index') }}">
+          <i class="bi bi-question-circle me-1"></i> Daftar Pertanyaan
+        </a>
 
         <!-- This will push to right -->
         <div class="nav-link ms-auto">
