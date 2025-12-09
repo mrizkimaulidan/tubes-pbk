@@ -31,7 +31,7 @@
                             <tbody>
                                 @foreach ($coffee as $kopi)
                                     <tr>
-                                        <th scope="row">1</th>
+                                        <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $kopi->name }}</td>
                                         <td>{{ $kopi->price }}</td>
                                         <td>{{ $kopi->description }}</td>
