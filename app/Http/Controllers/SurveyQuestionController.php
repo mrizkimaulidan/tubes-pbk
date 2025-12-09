@@ -14,8 +14,10 @@ class SurveyQuestionController extends Controller
      */
     public function index()
     {
-        $surveyQuestions = SurveyQuestion::paginate(10);
-        $surveyQuestions->loadCount('surveyQuestionOptions');
+        $surveyQuestions = SurveyQuestion::with('criteria')
+            ->withCount('surveyQuestionOptions')
+            ->paginate(10);
+
         $criterias = Criteria::all();
 
         return view('survey_questions.index', compact('surveyQuestions', 'criterias'));
