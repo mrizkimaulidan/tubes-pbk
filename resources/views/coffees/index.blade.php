@@ -25,10 +25,11 @@
                                     <th scope="col">Harga</th>
                                     <th scope="col">Deskripsi</th>
                                     <th scope="col">Gambar</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($coffe as $kopi)
+                                @foreach ($coffee as $kopi)
                                     <tr>
                                         <th scope="row">1</th>
                                         <td>{{ $kopi->name }}</td>
@@ -39,6 +40,24 @@
                                                 🔍 Lihat
                                             </a>
                                         </td>
+
+                                        <td>
+                                            <div class="btn-group gap-1" role="group">
+                                                <a href="{{ route('kopi.edit', $kopi) }}" class="btn btn-warning btn-sm">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <form action="{{ route('kopi.destroy', $kopi) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data kopi ini?')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -12,17 +12,14 @@ class CoffeeController extends Controller
      */
     public function index()
     {
-        $coffe = Coffee::all();
-        return view('coffees.index', compact('coffe'));
+        $coffee = Coffee::all();
+        return view('coffees.index', compact('coffee'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -31,7 +28,7 @@ class CoffeeController extends Controller
     {
         Coffee::create($request->all());
 
-        return redirect()->route('kopi.index')->with('success', 'Data kriteria berhasil ditambahkan!');
+        return redirect()->route('kopi.index')->with('success', 'Data coffee berhasil ditambahkan!');
     }
 
     /**
@@ -45,24 +42,28 @@ class CoffeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Coffee $coffee) //model & ?
     {
-        //
+        return view('coffees.edit', compact('coffee'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Coffee $coffee)
     {
-        //
+        $coffee->update($request->all());
+
+        return redirect()->route('kopi.index')->with('success', 'Data kopi berhasil diubah!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Coffee $coffee)
     {
-        //
+        $coffee->delete();
+
+        return redirect()->route('kopi.index')->with('success', 'Data kriteria berhasil dihapus!');
     }
 }
