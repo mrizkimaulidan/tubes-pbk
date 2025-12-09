@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Criteria;
 use App\Models\SurveyQuestion;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,9 @@ class SurveyQuestionController extends Controller
     public function index()
     {
         $surveyQuestions = SurveyQuestion::paginate(10);
+        $criterias = Criteria::all();
 
-        return view('survey_questions.index', compact('surveyQuestions'));
+        return view('survey_questions.index', compact('surveyQuestions', 'criterias'));
     }
 
     /**
@@ -30,7 +32,9 @@ class SurveyQuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        SurveyQuestion::create($request->all());
+
+        return redirect()->route('pertanyaan.index')->with('success', 'Data pertanyaan berhasil ditambah!');
     }
 
     /**
@@ -60,8 +64,10 @@ class SurveyQuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SurveyQuestion $surveyQuestion)
+    public function destroy(SurveyQuestion $question)
     {
-        //
+        $question->delete();
+
+        return redirect()->route('pertanyaan.index')->with('success', 'Data pertanyaan berhasil dihapus!');
     }
 }

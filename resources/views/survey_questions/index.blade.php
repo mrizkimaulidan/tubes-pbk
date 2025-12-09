@@ -93,5 +93,5 @@
 @endsection
 
 @push('modal')
-@include('criterias.create')
+@include('survey_questions.create')
 @endpush
