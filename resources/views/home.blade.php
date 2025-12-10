@@ -39,36 +39,34 @@
         </div>
     </nav>
 
-    <div class="container py-5">
-
+    <div class="container py-5 justify-content-center">
         <div class="card shadow-sm p-4 mb-4">
             <h4 class="mb-3 text-center">Cari Rekomendasi</h4>
 
+            {{-- <div class="container py-4 d-flex justify-content-center">
+    <div class="card shadow-sm p-3" style="max-width: 400px; width: 100%;">
+        <h5 class="mb-3 text-center">Cari Rekomendasi</h5> --}}
+
             <form>
-                <div class="mb-3">
-                    <label class="form-label">Rasa</label>
-                    <select class="form-select">
-                        <option value="">-- Pilih Rasa --</option>
-                        <option>Pedas</option>
-                    </select>
-                </div>
+                @if (!empty($SurveyQuestion) && $SurveyQuestion->count())
+                    @foreach ($SurveyQuestion as $question)
+                        <div class="mb-3">
+                            <label class="form-label text-dark">{{ $question->content }}</label>
 
-                <div class="mb-3">
-                    <label class="form-label">Intensitas</label>
-                    <select class="form-select">
-                        <option value="">-- Pilih Intensitas --</option>
-                        <option>Rendah</option>
-                    </select>
-                </div>
+                            <select class="form-select text-dark" name="question_{{ $question->id }}">
+                                <option value="" class="text-dark">-- Pilih Jawaban --</option>
 
-                <div class="mb-3">
-                    <label class="form-label">Harga</label>
-                    <select class="form-select">
-                        <option value="">-- Pilih Rentang Harga --</option>
-                        <option>Murah</option>
-                    </select>
-                </div>
-
+                                @foreach ($question->surveyQuestionOptions as $option)
+                                    <option value="{{ $option->id }}" class="text-dark">
+                                        {{ $option->label }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endforeach
+                @else
+                    <p class="text-muted">Belum ada pertanyaan.</p>
+                @endif
                 <button type="submit" class="btn btn-primary w-100">Cari Rekomendasi</button>
             </form>
         </div>
