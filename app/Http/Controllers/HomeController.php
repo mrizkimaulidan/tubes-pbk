@@ -9,8 +9,6 @@ class HomeController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $SurveyQuestion = SurveyQuestion::with('surveyQuestionOptions')->get();
-
-        return view('home', compact('SurveyQuestion'));
+        return view('welcome');
     }
 }

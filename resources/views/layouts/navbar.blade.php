@@ -1,25 +1,32 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary mb-5">
+<nav class="navbar navbar-expand-lg bg-body border-bottom sticky-top mb-5">
   <div class="container">
-    <a class="navbar-brand" href="#">{{ config('app.name') }}</a>
+    <a class="navbar-brand fw-bold" href="{{ route('home') }}">
+      <i class="bi bi-cup-hot-fill text-warning me-1"></i>
+      {{ config('app.name') }}
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav w-100">
-        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-semibold' : '' }}"
+          href="{{ route('dashboard') }}">
           <i class="bi bi-speedometer2 me-1"></i> Dashboard
         </a>
-        <a class="nav-link {{ request()->routeIs('kopi.*') ? 'active' : '' }}" href="{{ route('kopi.index') }}">
+        <a class="nav-link {{ request()->routeIs('kopi.*') ? 'active fw-semibold' : '' }}"
+          href="{{ route('kopi.index') }}">
           <i class="bi bi-cup-straw me-1"></i> Daftar Kopi
         </a>
-        <a class="nav-link {{ request()->routeIs('kriteria.*') ? 'active' : '' }}" href="{{ route('kriteria.index') }}">
+        <a class="nav-link {{ request()->routeIs('kriteria.*') ? 'active fw-semibold' : '' }}"
+          href="{{ route('kriteria.index') }}">
           <i class="bi bi-clipboard-data me-1"></i> Daftar Kriteria
         </a>
-        <a class="nav-link {{ request()->routeIs('pengguna.*') ? 'active' : '' }}" href="{{ route('pengguna.index') }}">
+        <a class="nav-link {{ request()->routeIs('pengguna.*') ? 'active fw-semibold' : '' }}"
+          href="{{ route('pengguna.index') }}">
           <i class="bi bi-person-badge me-1"></i> Daftar Pengguna
         </a>
-        <a class="nav-link {{ request()->routeIs('pertanyaan.*') ? 'active' : '' }}"
+        <a class="nav-link {{ request()->routeIs('pertanyaan.*') ? 'active fw-semibold' : '' }}"
           href="{{ route('pertanyaan.index') }}">
           <i class="bi bi-question-circle me-1"></i> Daftar Pertanyaan
         </a>
@@ -34,6 +41,35 @@
             </label>
           </div>
         </div>
+
+        @if (Route::has('login'))
+        @auth
+        <div class="nav-item dropdown ms-2">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name ?? 'User' }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-gear me-2"></i>
+                Pengaturan</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                @csrf
+                <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+        @else
+        <div class="nav-item ms-2">
+          <a class="btn btn-warning btn-sm" href="{{ route('login') }}">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+          </a>
+        </div>
+        @endauth
+        @endif
       </div>
     </div>
   </div>
