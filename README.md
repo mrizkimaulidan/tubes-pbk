@@ -76,6 +76,20 @@ php artisan serve
 
 Akses halaman URL di: http://127.0.0.1:8000
 
+## Kredensial Login
+
+Email:
+
+```bash
+admin@mail.com
+```
+
+Kata Sandi:
+
+```bash
+secret
+```
+
 ## Metode Weighted Product
 
 Metode WP digunakan untuk menghitung rekomendasi dengan rumus:
