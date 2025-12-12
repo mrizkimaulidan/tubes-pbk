@@ -10,6 +10,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav w-100">
+        <a class="nav-link {{ request()->routeIs('rekomendasi.index') ? 'active fw-semibold' : '' }}"
+          href="{{ route('rekomendasi.index') }}">
+          <i class="bi bi-magic me-1"></i> Rekomendasi
+        </a>
+
+        @auth
         <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-semibold' : '' }}"
           href="{{ route('dashboard') }}">
           <i class="bi bi-speedometer2 me-1"></i> Dashboard
@@ -30,46 +36,47 @@
           href="{{ route('pertanyaan.index') }}">
           <i class="bi bi-question-circle me-1"></i> Daftar Pertanyaan
         </a>
+        @endauth
 
-        <!-- This will push to right -->
-        <div class="nav-link ms-auto">
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="modeSwitchToggle">
-            <label class="form-check-label" for="modeSwitchToggle">
-              <!-- Initial icon -->
+        <!-- Right aligned controls: dark mode + auth -->
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div class="form-check form-switch d-flex align-items-center mb-0">
+            <input class="form-check-input me-2" type="checkbox" id="modeSwitchToggle">
+            <label class="form-check-label mb-0" for="modeSwitchToggle">
               <i class="bi bi-moon-stars-fill" id="modeSwitchToggleIcon"></i>
             </label>
           </div>
-        </div>
 
-        @if (Route::has('login'))
-        @auth
-        <div class="nav-item dropdown ms-2">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name ?? 'User' }}
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-gear me-2"></i>
-                Pengaturan</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                @csrf
-                <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
-              </form>
-            </li>
-          </ul>
+          @if (Route::has('login'))
+          @auth
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle p-0 d-inline-flex align-items-center" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name ?? 'User' }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>
+                  Pengaturan</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                  @csrf
+                  <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+          @else
+          <div>
+            <a class="btn btn-warning btn-sm d-inline-flex align-items-center" href="{{ route('login') }}">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Login
+            </a>
+          </div>
+          @endauth
+          @endif
         </div>
-        @else
-        <div class="nav-item ms-2">
-          <a class="btn btn-warning btn-sm" href="{{ route('login') }}">
-            <i class="bi bi-box-arrow-in-right me-1"></i> Login
-          </a>
-        </div>
-        @endauth
-        @endif
       </div>
     </div>
   </div>
