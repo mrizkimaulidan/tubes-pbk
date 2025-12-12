@@ -44,9 +44,9 @@
                     $criteria->attribute }}</span>
                 </td>
                 <td>
-                  <span class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="{{ $criteria->description }}">
-                    {{ Str::limit($criteria->description, 20) ?? '-' }}
+                  <span class="text-muted d-inline-block text-truncate" style="max-width: 18rem;"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $criteria->description }}">
+                    {{ $criteria->description ?? '-' }}
                   </span>
                 </td>
                 <td>
