@@ -52,7 +52,9 @@
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle p-0 d-inline-flex align-items-center" href="#" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name ?? 'User' }}
+              <i class="bi bi-person-circle me-1"></i>
+              <span class="d-inline-block text-truncate" style="max-width:9rem;" title="{{ auth()->user()->name }}">{{
+                auth()->user()->name }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>
