@@ -17,6 +17,11 @@ class CoffeSeeder extends Seeder
             'name' => 'kopi aren',
             'price' => 10000,
             'description' => 'deskripsi kopi',
+            'taste' => 'Pahit',
+            'intensity' => 'Sedang',
+            'sweetness' => 'Sedikit Manis',
+            'milk_level' => 'Sedikit',
+            'beans_type' => 'Arabica',
             'image_url' => 'foto',
         ]);
     }
