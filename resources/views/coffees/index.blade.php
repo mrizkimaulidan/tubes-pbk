@@ -24,6 +24,11 @@
                                     <th scope="col">Nama</th>
                                     <th scope="col">Harga</th>
                                     <th scope="col">Deskripsi</th>
+                                    <th scope="col">Rasa</th>
+                                    <th scope="col">Intensitas</th>
+                                    <th scope="col">Tingkat Kemanisan</th>
+                                    <th scope="col">Level Susu</th>
+                                    <th scope="col">Jenis Kopi</th>
                                     <th scope="col">Gambar</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
@@ -35,12 +40,15 @@
                                         <td>{{ $kopi->name }}</td>
                                         <td>{{ $kopi->price }}</td>
                                         <td>{{ $kopi->description }}</td>
+                                        <td>{{ $kopi->taste }}</td>
+                                        <td>{{ $kopi->intensity }}</td>
+                                        <td>{{ $kopi->sweetness }}</td>
+                                        <td>{{ $kopi->milk_level }}</td>
+                                        <td>{{ $kopi->beans_type }}</td>
                                         <td>
-                                            <a href="{{ $kopi->image_url }}" target="_blank" class="btn btn-sm btn-info">
-                                                🔍 Lihat
-                                            </a>
+                                            <a href="{{ $kopi->image_url }}" target="_blank" class="btn btn-sm btn-info">🔍
+                                                Lihat</a>
                                         </td>
-
                                         <td>
                                             <div class="btn-group gap-1" role="group">
                                                 <a href="{{ route('kopi.edit', $kopi) }}" class="btn btn-warning btn-sm">
@@ -57,7 +65,6 @@
                                                 </form>
                                             </div>
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>

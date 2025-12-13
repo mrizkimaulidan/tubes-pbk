@@ -10,6 +10,11 @@ class Coffee extends Model
         'name',
         'price',
         'description',
+        'taste',
+        'intensity',
+        'sweetness',
+        'milk_level',
+        'beans_type',
         'image_url',
     ];
 }
