@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::resource('/kopi', CoffeeController::class)->parameter('kopi', 'coffee');
+    Route::post('/kopi/import', [CoffeeController::class, 'import'])->name('kopi.import');
+
     Route::resource('/kriteria', CriteriaController::class)->parameter('kriteria', 'criteria');
     Route::resource('/pengguna', UserController::class)->parameter('pengguna', 'user');
     Route::resource('/pertanyaan', SurveyQuestionController::class)->parameter('pertanyaan', 'question');

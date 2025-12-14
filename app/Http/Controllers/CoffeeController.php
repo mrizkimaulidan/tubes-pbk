@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\CoffeesImport;
 use App\Models\Coffee;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CoffeeController extends Controller
 {
@@ -12,8 +14,9 @@ class CoffeeController extends Controller
      */
     public function index()
     {
-        $coffee = Coffee::all();
-        return view('coffees.index', compact('coffee'));
+        $coffees = Coffee::paginate(10);
+
+        return view('coffees.index', compact('coffees'));
     }
 
     /**
@@ -65,5 +68,12 @@ class CoffeeController extends Controller
         $coffee->delete();
 
         return redirect()->route('kopi.index')->with('success', 'Data kriteria berhasil dihapus!');
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new CoffeesImport, $request->file('file'));
+
+        return redirect()->route('kopi.index')->with('success', 'Data kopi berhasil diimpor!');
     }
 }
