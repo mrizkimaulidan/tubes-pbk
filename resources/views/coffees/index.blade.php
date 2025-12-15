@@ -87,7 +87,7 @@
                 </td>
 
                 <td>
-                  <img src="{{ asset('' . $coffee->image_url) }}" alt="{{ $coffee->name }}" class="rounded"
+                  <img src="{{ asset('storage/' . $coffee->image_url) }}" alt="{{ $coffee->name }}" class="rounded"
                     style="width: 100px; height: 100px; object-fit: cover;">
                 </td>
 
