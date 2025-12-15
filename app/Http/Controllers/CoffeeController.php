@@ -29,7 +29,12 @@ class CoffeeController extends Controller
      */
     public function store(Request $request)
     {
-        Coffee::create($request->all());
+        $imagePath = $request->file('image_url')->store('coffees', 'public');
+
+        $coffeeData = $request->all();
+        $coffeeData['image_url'] = $imagePath;
+
+        Coffee::create($coffeeData);
 
         return redirect()->route('kopi.index')->with('success', 'Data coffee berhasil ditambahkan!');
     }
