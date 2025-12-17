@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\LoginController;
 Route::get('/', fn() => view('welcome'))->name('home');
 
 Route::get('/rekomendasi', CoffeeRecommendationController::class)->name('rekomendasi.index');
+Route::post('/rekomendasi', [CoffeeRecommendationController::class, 'calculate'])->name('rekomendasi.calculate');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
