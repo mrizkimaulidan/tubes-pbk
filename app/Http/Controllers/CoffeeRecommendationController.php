@@ -5,20 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Coffee;
 use App\Models\SurveyQuestion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CoffeeRecommendationController extends Controller
 {
+    protected $surveyQuestions;
+
+    public function __construct()
+    {
+        $this->surveyQuestions = SurveyQuestion::with('surveyQuestionOptions')->get();
+    }
+
     /**
-     * Handle the incoming request.
+     * Display the recommendation form
      */
     public function __invoke(Request $request)
     {
-        $SurveyQuestion = SurveyQuestion::with('surveyQuestionOptions')->get();
-
-        return view('recommendation', compact('SurveyQuestion'));
+        return view('recommendation', [
+            'surveyQuestions' => $this->surveyQuestions,
+            'coffees' => collect(),
+        ]);
     }
 
+    /**
+     * Calculate and show recommendations
+     */
     public function calculate(Request $request)
     {
         $userWeights = $request->answers;
@@ -50,7 +60,6 @@ class CoffeeRecommendationController extends Controller
 
         $totalScore = 0;
         $coffeeData = $coffeeData->map(function ($item) use ($userWeights, $totalWeight, &$totalScore) {
-            // Calculate weighted score (S)
             $score = pow($item['mapped']['taste'], $userWeights[0] / $totalWeight)
                 * pow($item['mapped']['intensity'], $userWeights[1] / $totalWeight)
                 * pow($item['mapped']['price'], - ($userWeights[2] / $totalWeight))
@@ -63,33 +72,23 @@ class CoffeeRecommendationController extends Controller
             return $item;
         });
 
-        // Calculate preference value (V) for each coffee
         $coffeeData = $coffeeData->map(function ($item) use ($totalScore) {
-            // V = S_i / total S
             $item['V'] = round($item['S'] / $totalScore, 6);
-
-            // Percentage form
             $item['percentage'] = round($item['V'] * 100, 2);
-
             return $item;
         });
 
-        // Sort by V (descending) for ranking
         $coffeeData = $coffeeData->sortByDesc('V')->values();
 
-        // Add rank to each coffee
         $coffeeData = $coffeeData->map(function ($item, $index) {
             $item['rank'] = $index + 1;
             return $item;
         });
 
-        // Get survey questions for the view
-        $SurveyQuestion = SurveyQuestion::with('surveyQuestionOptions')->get();
-
         return view('recommendation', [
+            'surveyQuestions' => $this->surveyQuestions,
             'coffees' => $coffeeData->take(6),
             'total_S' => round($totalScore, 4),
-            'SurveyQuestion' => $SurveyQuestion,
             'user_weights' => $userWeights,
             'normalized_weights' => array_map(function ($weight) use ($totalWeight) {
                 return round($weight / $totalWeight, 4);
