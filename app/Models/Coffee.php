@@ -46,28 +46,28 @@ class Coffee extends Model
     /* =========================
      * Mapping Harga (COST)
      * ========================= */
-    private function mapPrice($price)
+    public function mapPrice($price)
     {
         return match (true) {
-            $price < 25000 => 5,        // Sangat Murah
-            $price <= 30000 => 4,       // Murah
-            $price <= 40000 => 3,       // Sedang
-            $price <= 50000 => 2,       // Mahal
-            default => 1                // Sangat Mahal
+            $price < 25000 => 5,        // Sangat Murah: < 25,000
+            $price <= 30000 => 4,       // Murah: 25,000 - 30,000
+            $price <= 40000 => 3,       // Sedang: 30,001 - 40,000
+            $price <= 50000 => 2,       // Mahal: 40,001 - 50,000
+            default => 1                // Sangat Mahal: > 50,000
         };
     }
 
     /* =========================
      * Mapping Rasa
      * ========================= */
-    private function mapTaste($value)
+    public function mapTaste($value)
     {
         return match ($value) {
-            'Sangat Pahit' => 1,
-            'Pahit' => 2,
+            'Sangat Pahit' => 5,
+            'Pahit' => 4,
             'Seimbang' => 3,
-            'Manis' => 4,
-            'Sangat Manis' => 5,
+            'Manis' => 2,
+            'Sangat Manis' => 1,
             default => 1
         };
     }
@@ -75,7 +75,7 @@ class Coffee extends Model
     /* =========================
      * Mapping Intensitas
      * ========================= */
-    private function mapIntensity($value)
+    public function mapIntensity($value)
     {
         return match ($value) {
             'Sangat Ringan' => 1,
@@ -90,7 +90,7 @@ class Coffee extends Model
     /* =========================
      * Mapping Sweetness
      * ========================= */
-    private function mapSweetness($value)
+    public function mapSweetness($value)
     {
         return match ($value) {
             'Tanpa Gula' => 1,
@@ -105,7 +105,7 @@ class Coffee extends Model
     /* =========================
      * Mapping Milk Level
      * ========================= */
-    private function mapMilkLevel($value)
+    public function mapMilkLevel($value)
     {
         return match ($value) {
             'Tanpa Susu' => 1,

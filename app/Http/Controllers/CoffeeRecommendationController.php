@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Coffee;
 use App\Models\SurveyQuestion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CoffeeRecommendationController extends Controller
 {
@@ -20,64 +21,79 @@ class CoffeeRecommendationController extends Controller
 
     public function calculate(Request $request)
     {
-        // dd($request->answers);
-        $request->validate([
-            'answers' => 'required|array'
-        ]);
+        $userWeights = $request->answers;
+        $totalWeight = array_sum($userWeights);
 
-        // 1. Bobot dari user
-        $answers = $request->answers;
-
-        // 2. Normalisasi bobot
-        $totalWeight = array_sum($answers);
-        $weights = [];
-
-        foreach ($answers as $criteria_id => $value) {
-            // dump($criteria_id);
-            $weights[$criteria_id] = $value / $totalWeight;
-        }
-
-        // 3. Kriteria COST
-        $costCriteria = [1]; // kriteria harga
-
-        $coffees = Coffee::all();
-        $scores = [];
-        $totalS = 0;
-
-        //    4. Hitung Vektor S
-        foreach ($coffees as $coffee) {
-            $S = 1;
-
-            foreach ($weights as $criteria_id => $weight) {
-                $nilai = $coffee->getCriteriaValue($criteria_id);
-
-                // COST → dibalik (1/x)
-                if (in_array($criteria_id, $costCriteria)) {
-                    $nilai = 1 / $nilai;
-                }
-
-                $S *= pow($nilai, $weight);
-            }
-
-            $scores[] = [
-                'coffee' => $coffee,
-                'S' => $S
+        $coffeeData = Coffee::all()->map(function ($coffee) {
+            return [
+                'id' => $coffee->id,
+                'name' => $coffee->name,
+                'original' => [
+                    'taste' => $coffee->taste,
+                    'intensity' => $coffee->intensity,
+                    'price' => $coffee->price,
+                    'sweetness' => $coffee->sweetness,
+                    'milk_level' => $coffee->milk_level,
+                ],
+                'mapped' => [
+                    'taste' => $coffee->mapTaste($coffee->taste),
+                    'intensity' => $coffee->mapIntensity($coffee->intensity),
+                    'price' => $coffee->mapPrice($coffee->price),
+                    'sweetness' => $coffee->mapSweetness($coffee->sweetness),
+                    'milk_level' => $coffee->mapMilkLevel($coffee->milk_level),
+                ],
+                'price' => $coffee->price,
+                'description' => $coffee->description,
+                'beans_type' => $coffee->beans_type,
             ];
+        });
 
-            $totalS += $S;
-        }
+        $totalScore = 0;
+        $coffeeData = $coffeeData->map(function ($item) use ($userWeights, $totalWeight, &$totalScore) {
+            // Calculate weighted score (S)
+            $score = pow($item['mapped']['taste'], $userWeights[0] / $totalWeight)
+                * pow($item['mapped']['intensity'], $userWeights[1] / $totalWeight)
+                * pow($item['mapped']['price'], - ($userWeights[2] / $totalWeight))
+                * pow($item['mapped']['sweetness'], $userWeights[3] / $totalWeight)
+                * pow($item['mapped']['milk_level'], $userWeights[4] / $totalWeight);
 
-        // 5. Hitung Vektor V
-        foreach ($scores as $key => $item) {
-            $scores[$key]['score'] = $item['S'] / $totalS;
-        }
+            $item['S'] = round($score, 4);
+            $totalScore += $item['S'];
 
-        // 6. Ranking
-        usort($scores, fn($a, $b) => $b['score'] <=> $a['score']);
+            return $item;
+        });
 
-        // 7. Kirim ke View
+        // Calculate preference value (V) for each coffee
+        $coffeeData = $coffeeData->map(function ($item) use ($totalScore) {
+            // V = S_i / total S
+            $item['V'] = round($item['S'] / $totalScore, 6);
+
+            // Percentage form
+            $item['percentage'] = round($item['V'] * 100, 2);
+
+            return $item;
+        });
+
+        // Sort by V (descending) for ranking
+        $coffeeData = $coffeeData->sortByDesc('V')->values();
+
+        // Add rank to each coffee
+        $coffeeData = $coffeeData->map(function ($item, $index) {
+            $item['rank'] = $index + 1;
+            return $item;
+        });
+
+        // Get survey questions for the view
         $SurveyQuestion = SurveyQuestion::with('surveyQuestionOptions')->get();
 
-        return view('recommendation', compact('SurveyQuestion', 'scores'));
+        return view('recommendation', [
+            'coffees' => $coffeeData->take(6),
+            'total_S' => round($totalScore, 4),
+            'SurveyQuestion' => $SurveyQuestion,
+            'user_weights' => $userWeights,
+            'normalized_weights' => array_map(function ($weight) use ($totalWeight) {
+                return round($weight / $totalWeight, 4);
+            }, $userWeights)
+        ]);
     }
 }
