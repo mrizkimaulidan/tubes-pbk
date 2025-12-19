@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            @if (isset($scores))
+            {{-- @if (isset($scores))
                 <hr class="my-5">
 
                 <h4 class="mb-3">Hasil Rekomendasi Kopi ☕</h4>
@@ -93,7 +93,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            @endif
+            @endif --}}
             {{-- coba --}}
 
             <!-- Results Section -->
@@ -143,7 +143,7 @@
                 </div>
 
                 <!-- Coffee Cards -->
-                <div class="row row-cols-1 row-cols-md-2 g-4">
+                {{-- <div class="row row-cols-1 row-cols-md-2 g-4">
                     @foreach ([1, 2, 3, 4] as $index)
                         <div class="col">
                             <div class="card h-100">
@@ -247,8 +247,158 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                    {{--
+                    @endforeach --}}
+
+                {{-- ===============================
+     HASIL REKOMENDASI KOPI
+================================ --}}
+                @if (isset($scores))
+
+                    <hr class="my-5">
+
+                    <h4 class="fw-bold mb-4">
+                        <i class="bi bi-cup-hot text-warning me-2"></i>
+                        Rekomendasi Kopi untuk Anda
+                    </h4>
+
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        @foreach ($scores as $index => $item)
+                            @php
+                                $coffee = $item['coffee'];
+                            @endphp
+
+                            <div class="col">
+                                <div class="card h-100 shadow-sm border-0">
+
+                                    {{-- GAMBAR --}}
+                                    <div class="position-relative overflow-hidden">
+                                        {{-- <img src="{{ $coffee->image ?? 'https://picsum.photos/400/300?random=' . ($index + 1) }}"
+                                            class="card-img-top" alt="{{ $coffee->name }}"
+                                            style="height: 220px; object-fit: cover;"> --}}
+
+                                        @php
+                                            $coffeeImages = [
+                                                'kopi-1.jpg',
+                                                'kopi-2.jpg',
+                                                'kopi-3.jpg',
+                                                'kopi-4.jpg',
+                                                'kopi-5.jpg',
+                                                'kopi-6.jpg',
+                                                'kopi-7.jpg',
+                                                'kopi-8.jpg',
+                                                'kopi-9.jpg',
+                                                'kopi-10.jpg',
+                                            ];
+
+                                            // pilih gambar berdasarkan ID (konsisten)
+                                            $image = $coffeeImages[$coffee->id % count($coffeeImages)];
+                                        @endphp
+
+                                        <img src="{{ asset('storage/coffees/' . $image) }}" class="card-img-top img-fluid"
+                                            alt="{{ $coffee->name }}" style="height:220px; object-fit:cover;">
+
+
+                                        {{-- BADGE RANKING --}}
+                                        <span class="badge bg-danger position-absolute top-0 start-0 m-3 px-3 py-2">
+                                            Rank #{{ $index + 1 }}
+                                        </span>
+
+                                        {{-- TOP RECOMMENDATION --}}
+                                        @if ($index == 0)
+                                            <span class="badge bg-success position-absolute top-0 end-0 m-3 px-3 py-2">
+                                                <i class="bi bi-award me-1"></i> Terbaik
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="card-body p-4">
+
+                                        {{-- NAMA + NILAI WP --}}
+                                        <h5 class="fw-bold mb-1">
+                                            <i class="bi bi-cup-hot text-warning me-2"></i>
+                                            {{ $coffee->name }}
+                                        </h5>
+
+                                        <small class="text-muted d-block mb-3">
+                                            Nilai Preferensi (WP):
+                                            <strong>{{ number_format($item['score'], 4) }}</strong>
+                                        </small>
+
+                                        {{-- DESKRIPSI --}}
+                                        <p class="text-secondary mb-4">
+                                            {{ $coffee->description ?? 'Kopi pilihan dengan kualitas dan cita rasa terbaik.' }}
+                                        </p>
+
+                                        {{-- ATRIBUT --}}
+                                        <div class="bg-body-secondary bg-opacity-50 rounded-3 p-3 mb-3">
+                                            <div class="d-flex flex-column gap-2">
+                                                <div>
+                                                    <small>
+                                                        <i class="bi bi-cash-stack text-success me-1"></i>
+                                                        Rp {{ number_format($coffee->price, 0, ',', '.') }}
+                                                    </small>
+                                                </div>
+
+                                                <div>
+                                                    <small>
+                                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                                        Rasa: {{ $coffee->taste }}
+                                                    </small>
+                                                </div>
+
+                                                <div>
+                                                    <small>
+                                                        <i class="bi bi-cup-hot text-danger me-1"></i>
+                                                        Intensitas: {{ $coffee->intensity }}
+                                                    </small>
+                                                </div>
+
+                                                <div>
+                                                    <small>
+                                                        <i class="bi bi-droplet-half text-primary me-1"></i>
+                                                        Sweetness: {{ $coffee->sweetness }}
+                                                    </small>
+                                                </div>
+
+                                                <div>
+                                                    <small>
+                                                        <i class="bi bi-cup-straw text-secondary me-1"></i>
+                                                        Milk Level: {{ $coffee->milk_level }}
+                                                    </small>
+                                                </div>
+
+                                                <div>
+                                                    <small>
+                                                        <i class="bi bi-wind text-info me-1"></i>
+                                                        Tipe Kopi: {{ $coffee->beans_type }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- ACTION --}}
+                                        {{-- <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">
+                                                Rekomendasi WP
+                                            </span>
+
+                                            <a href="{{ route('rekomendasi.index', $coffee->id) }}"
+                                                class="btn btn-primary px-4">
+                                                <i class="bi bi-eye me-2"></i>Detail
+                                            </a>
+                                        </div> --}}
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                @endif
+
+
+
+                {{--
       </div>
 
       <!-- Pagination & Info -->
@@ -279,7 +429,7 @@
           </ul>
         </nav>
       </div> --}}
-                </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
