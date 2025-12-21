@@ -62,7 +62,7 @@ class CoffeeRecommendationController extends Controller
         $coffeeData = $coffeeData->map(function ($item) use ($userWeights, $totalWeight, &$totalScore) {
             $score = pow($item['mapped']['taste'], $userWeights[0] / $totalWeight)
                 * pow($item['mapped']['intensity'], $userWeights[1] / $totalWeight)
-                * pow($item['mapped']['price'], - ($userWeights[2] / $totalWeight))
+                * pow($item['mapped']['price'], -($userWeights[2] / $totalWeight))
                 * pow($item['mapped']['sweetness'], $userWeights[3] / $totalWeight)
                 * pow($item['mapped']['milk_level'], $userWeights[4] / $totalWeight);
 
@@ -75,6 +75,7 @@ class CoffeeRecommendationController extends Controller
         $coffeeData = $coffeeData->map(function ($item) use ($totalScore) {
             $item['V'] = round($item['S'] / $totalScore, 6);
             $item['percentage'] = round($item['V'] * 100, 2);
+
             return $item;
         });
 
@@ -82,6 +83,7 @@ class CoffeeRecommendationController extends Controller
 
         $coffeeData = $coffeeData->map(function ($item, $index) {
             $item['rank'] = $index + 1;
+
             return $item;
         });
 
@@ -92,7 +94,7 @@ class CoffeeRecommendationController extends Controller
             'user_weights' => $userWeights,
             'normalized_weights' => array_map(function ($weight) use ($totalWeight) {
                 return round($weight / $totalWeight, 4);
-            }, $userWeights)
+            }, $userWeights),
         ]);
     }
 }

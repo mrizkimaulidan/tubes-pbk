@@ -1,16 +1,15 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CoffeeController;
 use App\Http\Controllers\CoffeeRecommendationController;
 use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SurveyQuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
 
-Route::get('/', fn() => view('welcome'))->name('home');
+Route::get('/', fn () => view('welcome'))->name('home');
 
 Route::get('/rekomendasi', CoffeeRecommendationController::class)->name('rekomendasi.index');
 Route::post('/rekomendasi', [CoffeeRecommendationController::class, 'calculate'])->name('rekomendasi.calculate');

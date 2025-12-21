@@ -20,8 +20,8 @@
       <div class="col-md-3 mb-3">
         <div class="card text-center p-3">
           <i class="bi bi-bar-chart fs-3 text-success mb-2"></i>
-          <h6 class="text-muted">Revenue</h6>
-          <h4 class="fw-bold">$24.5K</h4>
+          <h6 class="text-muted">Total Kopi</h6>
+          <h4 class="fw-bold">{{ $coffeeCount }}</h4>
         </div>
       </div>
 

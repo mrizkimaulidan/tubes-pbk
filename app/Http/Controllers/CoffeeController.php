@@ -50,7 +50,7 @@ class CoffeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Coffee $coffee) //model & ?
+    public function edit(Coffee $coffee) // model & ?
     {
         return view('coffees.edit', compact('coffee'));
     }

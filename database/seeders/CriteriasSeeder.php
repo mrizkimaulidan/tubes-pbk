@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Criteria;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Collection;
 
 class CriteriasSeeder extends Seeder
 {
@@ -24,7 +22,7 @@ class CriteriasSeeder extends Seeder
 
         foreach ($criterias as $index => $criteria) {
             Criteria::create([
-                'code' => 'K' . ($index + 1),
+                'code' => 'K'.($index + 1),
                 'name' => $criteria['name'],
                 'weight' => $criteria['weight'],
                 'attribute' => $criteria['type'],

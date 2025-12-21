@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             CoffeSeeder::class,
             CriteriasSeeder::class,
             SurveyQuestionsSeeder::class,
-            SurveyQuestionOptionSeeder::class
+            SurveyQuestionOptionSeeder::class,
         ]);
     }
 }

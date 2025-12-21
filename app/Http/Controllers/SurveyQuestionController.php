@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Criteria;
 use App\Models\SurveyQuestion;
-use App\Models\SurveyQuestionOption;
 use Illuminate\Http\Request;
 
 class SurveyQuestionController extends Controller

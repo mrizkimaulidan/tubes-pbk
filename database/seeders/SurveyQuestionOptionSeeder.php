@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\QuestionOption;
 use App\Models\SurveyQuestionOption;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SurveyQuestionOptionSeeder extends Seeder
@@ -49,7 +47,7 @@ class SurveyQuestionOptionSeeder extends Seeder
                 ['value' => 3, 'label' => 'Sedang', 'description' => 'Jumlah susu standar'],
                 ['value' => 4, 'label' => 'Banyak', 'description' => 'Banyak susu, creamy'],
                 ['value' => 5, 'label' => 'Sangat Banyak', 'description' => 'Sangat banyak susu, seperti latte'],
-            ]
+            ],
         ];
 
         foreach ($criteriaOptions as $surveyQuestionID => $options) {
@@ -59,7 +57,7 @@ class SurveyQuestionOptionSeeder extends Seeder
                     'value' => $option['value'],
                     'label' => $option['label'],
                     'description' => $option['description'],
-                    'locale' => 'id'
+                    'locale' => 'id',
                 ]);
             }
         }
