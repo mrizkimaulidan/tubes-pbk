@@ -81,7 +81,7 @@
             <div class="d-flex justify-content-between align-items-center">
               <span class="h5 fw-bold">
                 <i class="bi bi-cash-stack text-success me-2"></i>
-                Rp {{ number_format($coffee['price'], 0, ',', '.') }}
+                {{ $coffee->formatted_price }}
               </span>
             </div>
           </div>

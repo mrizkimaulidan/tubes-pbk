@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Coffee extends Model
 {
+    protected $appends = ['formatted_price'];
+
     protected $fillable = [
         'name',
         'price',
@@ -115,5 +118,12 @@ class Coffee extends Model
             'Sangat Banyak' => 5,
             default => 1
         };
+    }
+
+    protected function formattedPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => 'Rp '.number_format($this->price, 0, ',', '.')
+        );
     }
 }
