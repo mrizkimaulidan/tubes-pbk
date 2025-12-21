@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coffee extends Model
 {
-    protected $appends = ['formatted_price'];
-
     protected $fillable = [
         'name',
         'price',
@@ -124,6 +122,19 @@ class Coffee extends Model
     {
         return Attribute::make(
             get: fn () => 'Rp '.number_format($this->price, 0, ',', '.')
+        );
+    }
+
+    protected function mappedCoffeeCharacteristics(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => [
+                'taste' => $this->mapTaste($this->taste),
+                'intensity' => $this->mapIntensity($this->intensity),
+                'price' => $this->mapPrice($this->price),
+                'sweetness' => $this->mapSweetness($this->sweetness),
+                'milk_level' => $this->mapMilkLevel($this->milk_level),
+            ]
         );
     }
 }

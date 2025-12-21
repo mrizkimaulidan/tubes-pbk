@@ -31,70 +31,58 @@ class CoffeeRecommendationController extends Controller
      */
     public function calculate(Request $request)
     {
-        $userWeights = $request->answers;
-        $totalWeight = array_sum($userWeights);
+        $criteriaWeights = $request->answers;
+        $totalWeight = array_sum($criteriaWeights);
+        $normalizedWeights = array_map(fn ($weight) => $weight / $totalWeight, $criteriaWeights);
 
-        $coffeeData = Coffee::all()->map(function ($coffee) {
-            return [
-                'id' => $coffee->id,
-                'name' => $coffee->name,
-                'original' => [
-                    'taste' => $coffee->taste,
-                    'intensity' => $coffee->intensity,
-                    'price' => $coffee->price,
-                    'sweetness' => $coffee->sweetness,
-                    'milk_level' => $coffee->milk_level,
-                ],
-                'mapped' => [
-                    'taste' => $coffee->mapTaste($coffee->taste),
-                    'intensity' => $coffee->mapIntensity($coffee->intensity),
-                    'price' => $coffee->mapPrice($coffee->price),
-                    'sweetness' => $coffee->mapSweetness($coffee->sweetness),
-                    'milk_level' => $coffee->mapMilkLevel($coffee->milk_level),
-                ],
-                'price' => $coffee->price,
-                'description' => $coffee->description,
-                'beans_type' => $coffee->beans_type,
-            ];
+        // Get coffee data with mapped attributes
+        $coffees = Coffee::all()->each->append('formatted_price', 'mapped_coffee_characteristics');
+
+        $totalAlternativeScore = 0;
+
+        // Calculate Weighted Product score for each alternative (coffee)
+        $coffees = $coffees->map(function ($coffee) use ($normalizedWeights, &$totalAlternativeScore) {
+            $mappedValues = $coffee->mapped_coffee_characteristics;
+
+            // Weighted Product Formula: S_i = ∏(x_ij)^w_j
+            // where:
+            //   S_i = score for alternative i
+            //   x_ij = normalized value of criterion j for alternative i
+            //   w_j = weight of criterion j
+            //   For cost criteria (price): use negative exponent
+
+            $alternativeScore = pow($mappedValues['taste'], $normalizedWeights[0])
+                * pow($mappedValues['intensity'], $normalizedWeights[1])
+                * pow($mappedValues['price'], -$normalizedWeights[2])  // Cost criteria
+                * pow($mappedValues['sweetness'], $normalizedWeights[3])
+                * pow($mappedValues['milk_level'], $normalizedWeights[4]);
+
+            $coffee->weighted_product_score = round($alternativeScore, 4);
+            $totalAlternativeScore += $coffee->weighted_product_score;
+
+            return $coffee;
         });
 
-        $totalScore = 0;
-        $coffeeData = $coffeeData->map(function ($item) use ($userWeights, $totalWeight, &$totalScore) {
-            $score = pow($item['mapped']['taste'], $userWeights[0] / $totalWeight)
-                * pow($item['mapped']['intensity'], $userWeights[1] / $totalWeight)
-                * pow($item['mapped']['price'], -($userWeights[2] / $totalWeight))
-                * pow($item['mapped']['sweetness'], $userWeights[3] / $totalWeight)
-                * pow($item['mapped']['milk_level'], $userWeights[4] / $totalWeight);
+        // Calculate Preference Value (V_i = S_i / ∑S_i) and ranking
+        $coffees = $coffees
+            ->sortByDesc('weighted_product_score')
+            ->values()
+            ->map(function ($coffee, $rankIndex) use ($totalAlternativeScore) {
+                // Preference Value: V_i = S_i / ∑S_i
+                $coffee->preference_value = round($coffee->weighted_product_score / $totalAlternativeScore, 6);
 
-            $item['S'] = round($score, 4);
-            $totalScore += $item['S'];
+                // Convert to percentage for display
+                $coffee->match_percentage = round($coffee->preference_value * 100, 2);
 
-            return $item;
-        });
+                // Ranking (1-based index)
+                $coffee->rank = $rankIndex + 1;
 
-        $coffeeData = $coffeeData->map(function ($item) use ($totalScore) {
-            $item['V'] = round($item['S'] / $totalScore, 6);
-            $item['percentage'] = round($item['V'] * 100, 2);
-
-            return $item;
-        });
-
-        $coffeeData = $coffeeData->sortByDesc('V')->values();
-
-        $coffeeData = $coffeeData->map(function ($item, $index) {
-            $item['rank'] = $index + 1;
-
-            return $item;
-        });
+                return $coffee;
+            });
 
         return view('recommendation', [
             'surveyQuestions' => $this->surveyQuestions,
-            'coffees' => $coffeeData->take(6),
-            'total_S' => round($totalScore, 4),
-            'user_weights' => $userWeights,
-            'normalized_weights' => array_map(function ($weight) use ($totalWeight) {
-                return round($weight / $totalWeight, 4);
-            }, $userWeights),
+            'coffees' => $coffees->take(6),
         ]);
     }
 }

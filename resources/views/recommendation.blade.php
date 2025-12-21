@@ -97,11 +97,9 @@
                 Rank #{{ $coffee['rank'] }}
               </span>
 
-              @if ($index == 0)
               <span class="badge bg-success position-absolute top-0 end-0 m-3 px-3 py-2">
-                <i class="bi bi-award me-1"></i> Terbaik
+                <i class="bi bi-award me-1"></i> {{ $coffee['match_percentage'] }}%
               </span>
-              @endif
             </div>
 
             <div class="card-body p-4">
@@ -113,7 +111,7 @@
               <div class="mb-3">
                 <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">
                   <i class="bi bi-graph-up me-1"></i>
-                  Nilai Preferensi: <strong>{{ $coffee['V'] }}</strong>
+                  Nilai Preferensi: <strong>{{ $coffee['preference_value'] }}</strong>
                 </span>
               </div>
 
@@ -124,7 +122,7 @@
                   <div class="col-12">
                     <div class="d-flex align-items-center mb-2">
                       <i class="bi bi-cash-stack text-success me-2"></i>
-                      <span class="fw-medium">Rp {{ number_format($coffee['price'], 0, ',', '.') }}</span>
+                      <span class="fw-medium">{{ $coffee['formatted_price'] }}</span>
                     </div>
                   </div>
 
@@ -133,7 +131,7 @@
                       <i class="bi bi-star-fill text-warning me-2"></i>
                       <div>
                         <small class="text-muted d-block">Rasa</small>
-                        <span class="fw-medium">{{ $coffee['original']['taste'] }}</span>
+                        <span class="fw-medium">{{ $coffee['taste'] }}</span>
                       </div>
                     </div>
                   </div>
@@ -143,7 +141,7 @@
                       <i class="bi bi-cup-hot text-danger me-2"></i>
                       <div>
                         <small class="text-muted d-block">Intensitas</small>
-                        <span class="fw-medium">{{ $coffee['original']['intensity'] }}</span>
+                        <span class="fw-medium">{{ $coffee['intensity'] }}</span>
                       </div>
                     </div>
                   </div>
@@ -153,7 +151,7 @@
                       <i class="bi bi-droplet-half text-primary me-2"></i>
                       <div>
                         <small class="text-muted d-block">Sweetness</small>
-                        <span class="fw-medium">{{ $coffee['original']['sweetness'] }}</span>
+                        <span class="fw-medium">{{ $coffee['sweetness'] }}</span>
                       </div>
                     </div>
                   </div>
@@ -163,7 +161,7 @@
                       <i class="bi bi-cup-straw text-secondary me-2"></i>
                       <div>
                         <small class="text-muted d-block">Milk Level</small>
-                        <span class="fw-medium">{{ $coffee['original']['milk_level'] }}</span>
+                        <span class="fw-medium">{{ $coffee['milk_level'] }}</span>
                       </div>
                     </div>
                   </div>
