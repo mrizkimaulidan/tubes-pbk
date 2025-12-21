@@ -64,77 +64,30 @@
     </h2>
 
     <div class="row g-4">
+      @foreach ($coffees as $coffee)
       <!-- Coffee 1 -->
       <div class="col-md-4">
         <div class="card h-100 border">
-          <img
-            src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            class="card-img-top" alt="Arabica" style="height: 200px; object-fit: cover;">
+          <img src="{{ asset('storage/' . $coffee->image_url) }}" class="card-img-top" alt="{{ $coffee->name }}"
+            style="height: 200px; object-fit: cover;">
           <div class="card-body">
             <h5 class="card-title fw-bold">
-              <i class="bi bi-cup-hot text-warning me-2"></i>Arabica Premium
+              <i class="bi bi-cup-hot text-warning me-2"></i>{{ $coffee->name }}
             </h5>
             <p class="card-text text-body-secondary">
               <i class="bi bi-flower1 text-success me-2"></i>
-              Rasa khas dengan aroma floral.
+              {{ $coffee->description }}
             </p>
             <div class="d-flex justify-content-between align-items-center">
-              <span class="h5 fw-bold">Rp 42.000</span>
-              <button class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-plus"></i>
-              </button>
+              <span class="h5 fw-bold">
+                <i class="bi bi-cash-stack text-success me-2"></i>
+                Rp {{ number_format($coffee['price'], 0, ',', '.') }}
+              </span>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Coffee 2 -->
-      <div class="col-md-4">
-        <div class="card h-100 border">
-          <img
-            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            class="card-img-top" alt="Robusta" style="height: 200px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">
-              <i class="bi bi-cup-hot text-warning me-2"></i>Robusta Strong
-            </h5>
-            <p class="card-text text-body-secondary">
-              <i class="bi bi-lightning-charge text-warning me-2"></i>
-              Karakter kuat dengan kafein tinggi.
-            </p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="h5 fw-bold">Rp 38.000</span>
-              <button class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Coffee 3 -->
-      <div class="col-md-4">
-        <div class="card h-100 border">
-          <img
-            src="https://images.unsplash.com/photo-1568649929103-28ffbefaca1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            class="card-img-top" alt="Liberika" style="height: 200px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">
-              <i class="bi bi-cup-hot text-warning me-2"></i>Liberika Blend
-            </h5>
-            <p class="card-text text-body-secondary">
-              <i class="bi bi-heart text-danger me-2"></i>
-              Rasa manis dan asam yang seimbang.
-            </p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="h5 fw-bold">Rp 45.000</span>
-              <button class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      @endforeach
     </div>
   </div>
 </section>
