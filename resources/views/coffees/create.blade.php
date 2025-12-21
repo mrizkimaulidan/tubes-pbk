@@ -37,6 +37,11 @@
                 <label for="image_url" class="form-label">Pilih gambar</label>
                 <input class="form-control" type="file" name="image_url" id="image_url">
               </div>
+
+              <div class="mb-3">
+                <img src="#" class="img-thumbnail" alt="Preview" id="image_preview"
+                  style="width: 300px; height: 300px; object-fit: cover; display: none;">
+              </div>
             </div>
 
             <!-- Kolom Kanan - Karakteristik Kopi -->

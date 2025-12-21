@@ -53,6 +53,8 @@
   </script>
 
   @stack('modal')
+
+  @stack('javascript')
 </body>
 
 </html>

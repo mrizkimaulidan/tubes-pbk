@@ -126,3 +126,7 @@
 @include('coffees.create')
 @include('coffees.import')
 @endpush
+
+@push('javascript')
+@include('coffees.script')
+@endpush
