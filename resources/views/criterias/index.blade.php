@@ -23,7 +23,6 @@
                 <th scope="col">No</th>
                 <th scope="col">Kode</th>
                 <th scope="col">Nama</th>
-                <th scope="col">Bobot</th>
                 <th scope="col">Atribut</th>
                 <th scope="col">Deskripsi</th>
                 <th scope="col">Aksi</th>
@@ -35,9 +34,6 @@
                 <th scope="row">{{ $loop->iteration }}</th>
                 <td>{{ $criteria->code }}</td>
                 <td>{{ $criteria->name }}</td>
-                <td>
-                  <span class="fw-bold">{{ $criteria->weight }}</span>
-                </td>
                 <td>
                   <span
                     class="badge bg-{{ $criteria->attribute == 'benefit' ? 'primary' : 'secondary' }}-subtle text-primary-emphasis">{{

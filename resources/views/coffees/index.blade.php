@@ -54,7 +54,7 @@
                     <div class="d-flex align-items-center">
                       <span class="badge bg-success-subtle text-success-emphasis">
                         <i class="bi bi-cash-stack"></i>
-                        {{ $coffee->price }}
+                        {{ $coffee->formatted_price }}
                       </span>
                     </div>
                     <div class="d-flex align-items-center">

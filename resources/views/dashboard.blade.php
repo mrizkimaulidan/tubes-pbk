@@ -12,7 +12,7 @@
         <div class="card text-center p-3">
           <i class="bi bi-people fs-3 text-primary mb-2"></i>
           <h6 class="text-muted">Total Pengguna</h6>
-          <h4 class="fw-bold">1,254</h4>
+          <h4 class="fw-bold">{{ $userCount }}</h4>
         </div>
       </div>
 

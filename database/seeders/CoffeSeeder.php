@@ -12,16 +12,6 @@ class CoffeSeeder extends Seeder
      */
     public function run(): void
     {
-        Coffee::create([
-            'name' => 'kopi aren',
-            'price' => 10000,
-            'description' => 'deskripsi kopi',
-            'taste' => 'Pahit',
-            'intensity' => 'Sedang',
-            'sweetness' => 'Sedikit Manis',
-            'milk_level' => 'Sedikit',
-            'beans_type' => 'Arabica',
-            'image_url' => 'foto',
-        ]);
+        Coffee::factory(100)->create();
     }
 }
