@@ -9,23 +9,26 @@
         <form action="{{ route('pengguna.store') }}" method="POST" id="createForm">
           @csrf
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="name" id="name" placeholder="Nama Lengkap" required>
+            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
+              placeholder="Nama Lengkap" value="{{ old('name') }}" required>
             <label for="name">Nama Lengkap <span class="text-danger">*</span></label>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Alamat Email" required>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
+              placeholder="Alamat Email" value="{{ old('email') }}" required>
             <label for="email">Alamat Email <span class="text-danger">*</span></label>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Kata Sandi">
+            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password"
+              id="password" placeholder="Kata Sandi" required>
             <label for="password">Kata Sandi <span class="text-danger">*</span></label>
           </div>
 
           <div class="form-floating mb-3">
             <input type="password_confirmation" class="form-control" name="password_confirmation"
-              id="password_confirmation" placeholder="Konfirmasi Kata Sandi">
+              id="password_confirmation" placeholder="Konfirmasi Kata Sandi" required>
             <label for="password_confirmation">Konfirmasi Kata Sandi <span class="text-danger">*</span></label>
           </div>
 
