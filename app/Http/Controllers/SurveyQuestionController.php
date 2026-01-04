@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateSurveyQuestionRequest;
 use App\Models\Criteria;
 use App\Models\SurveyQuestion;
 use Illuminate\Http\Request;
@@ -61,9 +62,9 @@ class SurveyQuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SurveyQuestion $question)
+    public function update(UpdateSurveyQuestionRequest $request, SurveyQuestion $question)
     {
-        $question->update($request->all());
+        $question->update($request->validated());
 
         return redirect()->route('pertanyaan.index')->with('success', 'Data pertanyaan berhasil diubah!');
     }

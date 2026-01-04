@@ -4,7 +4,9 @@
 
 @section('content')
 <div class="container">
+  @include('partials.alert')
   <div class="row d-flex justify-content-center">
+
     <div class="col-6">
       <div class="card">
         <div class="card-body">
@@ -16,7 +18,7 @@
 
             <div class="form-floating mb-3">
               <input type="text" value="{{ $question->criteria->code }}" class="form-control" disabled required>
-              <label for="sort_order">Kriteria <span class="text-danger">*</span></label>
+              <label>Kriteria <span class="text-danger">*</span></label>
             </div>
 
             <div class="mb-3">
