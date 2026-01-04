@@ -13,18 +13,17 @@ class CriteriasSeeder extends Seeder
     public function run(): void
     {
         $criterias = [
-            ['name' => 'Rasa', 'weight' => 0.25, 'type' => 'benefit'],
-            ['name' => 'Intensitas', 'weight' => 0.15, 'type' => 'benefit'],
-            ['name' => 'Harga', 'weight' => 0.1, 'type' => 'cost'],
-            ['name' => 'Tingkat Kemanisan', 'weight' => 0.2, 'type' => 'benefit'],
-            ['name' => 'Level Susu', 'weight' => 0.3, 'type' => 'benefit'],
+            ['name' => 'Rasa', 'type' => 'benefit'],
+            ['name' => 'Intensitas', 'type' => 'benefit'],
+            ['name' => 'Harga', 'type' => 'cost'],
+            ['name' => 'Tingkat Kemanisan', 'type' => 'benefit'],
+            ['name' => 'Level Susu', 'type' => 'benefit'],
         ];
 
         foreach ($criterias as $index => $criteria) {
             Criteria::create([
                 'code' => 'K'.($index + 1),
                 'name' => $criteria['name'],
-                'weight' => $criteria['weight'],
                 'attribute' => $criteria['type'],
             ]);
         }
