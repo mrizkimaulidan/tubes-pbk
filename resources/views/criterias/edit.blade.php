@@ -4,69 +4,99 @@
 
 @section('content')
 <div class="container">
-  <div class="row d-flex justify-content-center">
-    <div class="col-6">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Ubah Kriteria</h5>
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="card-title mb-0">Ubah Kriteria</h5>
+            <a href="{{ route('kriteria.index') }}" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-arrow-left me-1"></i> Kembali
+            </a>
+          </div>
 
           <form action="{{ route('kriteria.update', $criteria) }}" method="POST" id="editForm">
             @csrf
             @method('PUT')
 
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" name="code" id="code" placeholder="K1"
-                value="{{ $criteria->code }}" required>
-              <label for="code">Kode <span class="text-danger">*</span></label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control " name="name" id="name" placeholder="Nama Kriteria"
-                value="{{ $criteria->name }}" required>
-              <label for="name">Nama Kriteria <span class="text-danger">*</span></label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input type="number" step="0.01" min="0" max="1" class="form-control" name="weight" id="weight"
-                placeholder="0.25" value="{{ $criteria->weight }}" required>
-              <label for="weight">Bobot (0-1) <span class="text-danger">*</span></label>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Tipe <span class="text-danger">*</span></label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="attribute" id="benefit" value="benefit" {{
-                  $criteria->attribute == 'benefit' ? 'checked' : ''
-                }} required>
-                <label class="form-check-label" for="benefit">
-                  Benefit (Semakin tinggi semakin baik)
-                </label>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control @error('code') is-invalid @enderror" name="code" id="code"
+                    placeholder="K1" value="{{ old('code', $criteria->code) }}" required>
+                  <label for="code">Kode <span class="text-danger">*</span></label>
+                  @error('code')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="attribute" id="cost" value="cost" {{
-                  $criteria->attribute == 'cost' ? 'checked' : '' }}
-                required>
-                <label class="form-check-label" for="cost">
-                  Cost (Semakin rendah semakin baik)
-                </label>
-              </div>
-            </div>
 
-            <div class="mb-3">
-              <div class="form-floating">
-                <textarea class="form-control" placeholder="Opsional" name="description" id="description"
-                  style="height: 100px">{{ $criteria->description }}</textarea>
-                <label for="description">Deskripsi</label>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
+                    placeholder="Nama Kriteria" value="{{ old('name', $criteria->name) }}" required>
+                  <label for="name">Nama Kriteria <span class="text-danger">*</span></label>
+                  @error('name')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
               </div>
-            </div>
 
-            <div class="d-flex justify-content-between">
-              <a href="{{ route('kriteria.index') }}" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Kembali
-              </a>
-              <button type="submit" class="btn btn-primary">
-                <i class="bi bi-check-circle"></i> Simpan
-              </button>
+              <div class="col-12">
+                <div>
+                  <label class="form-label">Tipe <span class="text-danger">*</span></label>
+                  <div class="d-flex gap-3">
+                    <div class="form-check">
+                      <input class="form-check-input @error('attribute') is-invalid @enderror" type="radio"
+                        name="attribute" id="benefit" value="benefit" {{ old('attribute', $criteria->attribute) ==
+                      'benefit' ? 'checked' : '' }} required>
+                      <label class="form-check-label" for="benefit">
+                        <span class="badge bg-primary-subtle text-primary-emphasis">Benefit</span>
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input @error('attribute') is-invalid @enderror" type="radio"
+                        name="attribute" id="cost" value="cost" {{ old('attribute', $criteria->attribute) == 'cost' ?
+                      'checked' : '' }} required>
+                      <label class="form-check-label" for="cost">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis">Cost</span>
+                      </label>
+                    </div>
+                  </div>
+                  @error('attribute')
+                  <div class="invalid-feedback d-block">{{ $message }}</div>
+                  @enderror
+                  <div class="form-text">
+                    <small class="text-muted">
+                      Benefit: semakin tinggi semakin baik | Cost: semakin rendah semakin baik
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-floating">
+                  <textarea class="form-control @error('description') is-invalid @enderror" placeholder="Opsional"
+                    name="description" id="description"
+                    style="height: 100px">{{ old('description', $criteria->description) }}</textarea>
+                  <label for="description">Deskripsi</label>
+                  @error('description')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                  <div class="form-text">Deskripsi opsional untuk memberikan penjelasan tentang kriteria</div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                  <a href="{{ route('kriteria.index') }}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle me-1"></i> Batal
+                  </a>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle me-1"></i> Simpan Perubahan
+                  </button>
+                </div>
+              </div>
             </div>
           </form>
         </div>
