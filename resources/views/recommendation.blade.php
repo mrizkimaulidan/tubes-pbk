@@ -20,7 +20,7 @@
             @foreach ($surveyQuestions as $question)
             <div class="mb-4">
               <label class="form-label fw-medium mb-2">{{ $question->content }}</label>
-              <select name="answers[{{ $question->id_criteria }}]" class="form-select" required>
+              <select name="answers[]" class="form-select" required>
                 <option value="" disabled selected>Pilih Jawaban</option>
                 @foreach ($question->surveyQuestionOptions as $option)
                 <option value="{{ $option->value }}">
