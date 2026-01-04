@@ -42,8 +42,6 @@
                   </div>
 
                   <div class="d-flex align-items-center gap-2 small text-muted">
-                    <span>Bobot: {{ $question->criteria->weight }}</span>
-                    <i class="bi bi-dot"></i>
                     <span>Bahasa: {{ $question->locale }}</span>
                     <i class="bi bi-dot"></i>
                     <span class="badge bg-{{ $question->criteria->attribute == 'benefit' ? 'primary' : 'secondary' }}-subtle
