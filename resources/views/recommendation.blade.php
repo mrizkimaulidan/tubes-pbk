@@ -17,13 +17,13 @@
           <form action="{{ route('rekomendasi.calculate') }}" method="POST">
             @csrf
 
-            @foreach ($surveyQuestions as $question)
+            @foreach ($surveyQuestions as $index => $question)
             <div class="mb-4">
               <label class="form-label fw-medium mb-2">{{ $question->content }}</label>
               <select name="answers[]" class="form-select" required>
                 <option value="" disabled selected>Pilih Jawaban</option>
                 @foreach ($question->surveyQuestionOptions as $option)
-                <option value="{{ $option->value }}">
+                <option value="{{ $option->value }}" @selected(request()->input("answers.{$index}") == $option->value)>
                   {{ $option->label }} - {{ $option->description }}
                 </option>
                 @endforeach
